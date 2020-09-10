@@ -22,7 +22,7 @@ const CategoryItem = (props) => {
           <Card containerStyle={styles.card}>
             <Image
               style={styles.img}
-              resizeMode="contain"
+              resizeMode="center"
               source={{ uri: `${axios.defaults.baseURL}${props.photo}` }}
               PlaceholderContent={<ActivityIndicator />}
             />

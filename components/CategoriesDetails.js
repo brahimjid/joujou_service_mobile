@@ -16,7 +16,7 @@ const CategoryItem = (props) => {
     <View style={styles.categoryItem}>
       <TouchableHighlight
         underlayColor={colors.bgwhite}
-        onPress={props.categoryDetail}
+        onPress={props.showItem}
       >
         <View style={styles.categoriesContainer}>
           <Card containerStyle={styles.card}>
@@ -30,7 +30,7 @@ const CategoryItem = (props) => {
             <View style={styles.imgContainer}>
               <View style={styles.detail}>
                 <Text style={styles.categoryName}>{props.name}</Text>
-                <Text style={styles.categoryPrice}>{props.prix} MRU</Text>
+                <Text style={styles.categoryPrice}>{props.prix}</Text>
               </View>
             </View>
           </Card>
@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
 
-    elevation: 0.5,
+    elevation: 3,
   },
   img: {
-    width: Dimensions.get("window").width / 2,
+    width: Dimensions.get("window").width / 2.6,
     height: Dimensions.get("window").height / 5.5,
   },
   imgContainer: {
