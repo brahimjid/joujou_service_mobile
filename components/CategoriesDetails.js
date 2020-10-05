@@ -7,33 +7,29 @@ import {
   Dimensions,
 } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
-import { Card, Image } from "react-native-elements";
+import { Image } from "react-native-elements";
 import colors from "../const/colors";
-import axios from "../const/api";
 
 const CategoryItem = (props) => {
   return (
     <View style={styles.categoryItem}>
-      <TouchableHighlight
-        underlayColor={colors.bgwhite}
-        onPress={props.showItem}
-      >
+      <TouchableHighlight underlayColor={"none"} onPress={props.showItem}>
         <View style={styles.categoriesContainer}>
-          <Card containerStyle={styles.card}>
+          <View style={styles.card}>
             <Image
               style={styles.img}
               resizeMode="contain"
-              source={{ uri: `${axios.defaults.baseURL}${props.photo}` }}
-              // source={require("../assets/case.jpg")}
+              source={{ uri: props.photo }}
               PlaceholderContent={<ActivityIndicator />}
             />
             <View style={styles.imgContainer}>
               <View style={styles.detail}>
                 <Text style={styles.categoryName}>{props.name}</Text>
+
                 <Text style={styles.categoryPrice}>{props.prix}</Text>
               </View>
             </View>
-          </Card>
+          </View>
         </View>
       </TouchableHighlight>
     </View>
@@ -45,17 +41,20 @@ export default CategoryItem;
 const styles = StyleSheet.create({
   categoriesContainer: {
     alignItems: "center",
-    marginBottom: 20,
+    justifyContent: "center",
+    overflow: "hidden",
   },
   categoryItem: {
-    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    // marginLeft: 25,
   },
   card: {
-    //borderRadius: 10,
     borderColor: colors.bgwhite,
-    // backgroundColor: "#F6F6F6",
-    shadowColor: "white",
+    borderWidth: 1,
+    backgroundColor: "#FFF",
+    shadowColor: "grey",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -63,30 +62,29 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
 
-    elevation: 3,
-  },
-  img: {
-    width: Dimensions.get("window").width / 2.6,
-    height: Dimensions.get("window").height / 5.5,
+    elevation: 4,
+    marginVertical: 20,
   },
   imgContainer: {
     flexDirection: "row",
+    overflow: "hidden",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
   },
+  img: {
+    width: Dimensions.get("window").width / 2.2,
+    height: Dimensions.get("window").height / 6.2,
+    marginTop: 2,
+  },
+
   categoryName: {
-    marginTop: 10,
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "column",
+    marginTop: 5,
     paddingTop: 5,
-    //fontWeight: "bold",
     textAlign: "center",
   },
   categoryPrice: {
-    marginTop: 10,
-    flex: 1,
-    flexWrap: "wrap",
-    // flexDirection: "column",
-    //paddingTop: 5,
+    paddingVertical: 5,
     fontWeight: "bold",
     textAlign: "center",
   },

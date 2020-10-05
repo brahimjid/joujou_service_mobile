@@ -1,0 +1,191 @@
+import React, { Component } from "react";
+import {
+  View,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import Carousel, { Pagination } from "react-native-snap-carousel"; //Thank From distributer(s) of this lib
+import styles from "../const/SliderBox.style";
+
+const width = Dimensions.get("window").width;
+
+export class SliderBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentImage: props.firstItem || 0,
+      loading: [],
+    };
+    this.onCurrentImagePressedHandler = this.onCurrentImagePressedHandler.bind(
+      this
+    );
+    this.onSnap = this.onSnap.bind(this);
+
+    if (props.ImageLoader) {
+      this.Loader = props.ImageLoader;
+    }
+  }
+  componentDidMount() {
+    let a = [...Array(this.props.images.length).keys()].map((i) => false);
+  }
+  onCurrentImagePressedHandler() {
+    if (this.props.onCurrentImagePressed) {
+      this.props.onCurrentImagePressed(this.state.currentImage);
+    }
+  }
+
+  onSnap(index) {
+    const { currentImageEmitter } = this.props;
+    this.setState({ currentImage: index }, () => {
+      if (currentImageEmitter) {
+        currentImageEmitter(this.state.currentImage);
+      }
+    });
+  }
+
+  Loader = ActivityIndicator;
+
+  _renderItem({ item, index }) {
+    const {
+      ImageComponent,
+      ImageComponentStyle = {},
+      sliderBoxHeight,
+      disableOnPress,
+      resizeMethod,
+      resizeMode,
+      imageLoadingColor = "#C62827",
+    } = this.props;
+    return (
+      <View
+        style={{
+          position: "relative",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity
+          key={index}
+          disabled={disableOnPress}
+          onPress={this.onCurrentImagePressedHandler}
+          activeOpacity={1}
+        >
+          <ImageComponent
+            style={[
+              {
+                width: "100%",
+                height: sliderBoxHeight || 400,
+                alignSelf: "center",
+              },
+              imgSt,
+            ]}
+            source={typeof item === "string" ? { uri: item } : item}
+            resizeMethod={resizeMethod || "resize"}
+            resizeMode={resizeMode || "contain"}
+            onLoad={() => {}}
+            onLoadStart={() => {}}
+            onLoadEnd={() => {
+              let t = this.state.loading;
+              t[index] = true;
+              this.setState({ loading: t });
+            }}
+            {...this.props}
+          />
+        </TouchableOpacity>
+        {!this.state.loading[index] && (
+          <this.Loader
+            index={index}
+            size="large"
+            color={imageLoadingColor}
+            style={{
+              position: "absolute",
+              alignSelf: "center",
+            }}
+          />
+        )}
+      </View>
+    );
+  }
+
+  get pagination() {
+    const { currentImage } = this.state;
+    const {
+      images,
+      dotStyle,
+      dotColor,
+      inactiveDotColor,
+      paginationBoxStyle,
+      paginationBoxVerticalPadding,
+    } = this.props;
+    return (
+      <Pagination
+        borderRadius={2}
+        dotsLength={images.length}
+        activeDotIndex={currentImage}
+        dotStyle={dotStyle || styles.dotStyle}
+        dotColor={dotColor || colors.dotColors}
+        inactiveDotColor={inactiveDotColor || colors.white}
+        inactiveDotScale={0.8}
+        carouselRef={this._ref}
+        inactiveDotOpacity={0.8}
+        tappableDots={!!this._ref}
+        containerStyle={[
+          styles.paginationBoxStyle,
+          paginationBoxVerticalPadding
+            ? { paddingVertical: paginationBoxVerticalPadding }
+            : {},
+          paginationBoxStyle ? paginationBoxStyle : {},
+        ]}
+        {...this.props}
+      />
+    );
+  }
+
+  render() {
+    const {
+      images,
+      circleLoop,
+      autoplay,
+      parentWidth,
+      loopClonesPerSide,
+      autoplayDelay,
+    } = this.props;
+    return (
+      <View>
+        <Carousel
+          autoplayDelay={autoplayDelay}
+          layout={"default"}
+          useScrollView
+          data={images}
+          ref={(c) => (this._ref = c)}
+          loop={circleLoop || false}
+          enableSnap={true}
+          autoplay={autoplay || true}
+          itemWidth={parentWidth || width}
+          sliderWidth={parentWidth || width}
+          loopClonesPerSide={loopClonesPerSide || 5}
+          renderItem={(item) => this._renderItem(item)}
+          onSnapToItem={(index) => this.onSnap(index)}
+          {...this.props}
+        />
+        {images.length > 1 && this.pagination}
+      </View>
+    );
+  }
+}
+
+const colors = {
+  dotColors: "#C62827",
+  white: "#90A4AE",
+};
+const imgSt = {
+  width: Dimensions.get("window").width / 1,
+  height: Dimensions.get("window").height / 4.2,
+  justifyContent: "center",
+  alignItems: "center",
+  alignSelf: "center",
+};
+
+SliderBox.defaultProps = {
+  ImageComponent: Image,
+};

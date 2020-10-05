@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 const AppNavigator = (props) => {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="default" backgroundColor={colors.primary} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
 
       <Stack.Navigator
         screenOptions={{
@@ -27,12 +27,12 @@ const AppNavigator = (props) => {
           statusBarStyle: "light",
           headerRight: () => (
             <Icon
-              reverse
+              // reverse
               name="md-cart"
-              containerStyle={{ backgroundColor: "red" }}
+              containerStyle={{ marginRight: 15, overflow: "hidden" }}
               type="ionicon"
               size={26}
-              color={colors.primary}
+              color={"#fff"}
               onPress={() => alert(5)}
             />
           ),

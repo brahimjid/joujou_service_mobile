@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, Alert, StatusBar } from "react-native";
-import { Text } from "react-native-elements";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import axios from "../const/api";
 import colors from "../const/colors";
 import CategoryItem from "../components/CategoryItem";
@@ -16,7 +15,6 @@ export default function HomeSecreen(props) {
     axios
       .get("/categories/")
       .then((res) => {
-        //  console.log(res.data);
         setCategories(res.data);
         setLoading(false);
       })
@@ -30,7 +28,6 @@ export default function HomeSecreen(props) {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#F5FCFF",
-          //backgroundColor: "#939799",
         }}
       >
         <Spinner visible={true} color={colors.primary} />
@@ -85,5 +82,13 @@ const styles = StyleSheet.create({
   conatiner: {
     flex: 1,
     backgroundColor: colors.bgwhite,
+  },
+  ca: {
+    height: "15%",
+    width: "20%",
+    elevation: 4,
+    borderRadius: 10,
+    borderColor: "white",
+    overflow: "hidden",
   },
 });

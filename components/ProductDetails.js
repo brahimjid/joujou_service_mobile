@@ -9,7 +9,6 @@ export default function ProductDetails(props) {
     <View style={styles.cnt}>
       <View style={styles.infoCnt}>
         <Text style={styles.categoryName}>{props.name}</Text>
-        {/* <ScrollView> */}
         <ListItem
           contentContainerStyle={{ flex: 1 }}
           title={"Code"}
@@ -66,33 +65,26 @@ export default function ProductDetails(props) {
 const styles = StyleSheet.create({
   cnt: {
     width: "100%",
-    // flex: 1,
     height: "87%",
     maxHeight: "87%",
     overflow: "hidden",
   },
   infoCnt: {
     marginTop: 10,
-    // marginBottom: 20,
     backgroundColor: colors.bgwhite,
     flex: 1,
-    // height: "40%",
   },
   descContainer: {
     backgroundColor: colors.bgwhite,
     marginVertical: 10,
-    //flex: 1,
     height: "37%",
-    // overflow: "hidden",
     maxHeight: "38%",
-    //borderWidth: 1,
   },
 
   categoryName: {
     marginTop: 10,
     flexWrap: "wrap",
     paddingTop: 5,
-    //marginLeft: 15,
     marginBottom: 10,
     fontSize: 16,
     fontWeight: "bold",
@@ -106,7 +98,6 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   descWrapper: {
-    //paddingVertical: 10,
     marginTop: 2,
     marginLeft: 10,
   },

@@ -17,7 +17,8 @@ export default function CategoryDetailSecreen({ route, navigation }) {
     axios
       .get("/categories/" + name)
       .then((res) => {
-        setItems(res.data);
+        // console.log(res.data.categ);
+        setItems(res.data.products);
         setLoading(false);
         setLoading(false);
         // console.log(res.data);

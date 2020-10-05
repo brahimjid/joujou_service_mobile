@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Linking } from "react-native";
+import { StyleSheet, Text, View, Linking, Platform } from "react-native";
 import { Button } from "react-native-elements";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import colors from "../const/colors";
@@ -12,14 +12,14 @@ export default function AddToCard(props) {
           Linking.openURL(`tel:32008600`);
         }}
         buttonStyle={{ marginRight: 5, backgroundColor: colors.phone }}
-        icon={<Ionicons name="md-call" size={28} color="white" />}
+        icon={<Ionicons name="md-call" size={24} color="white" />}
       />
       <Button
         buttonStyle={styles.addToCardBtn}
         icon={
           <FontAwesome5
             name="cart-plus"
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 15 }}
             size={24}
             color="white"
           />
@@ -43,9 +43,9 @@ export default function AddToCard(props) {
 const styles = StyleSheet.create({
   buyCnt: {
     position: "absolute",
-    bottom: 0,
+    bottom: Platform.OS == "ios" ? 20 : 10,
     width: "100%",
-    padding: 10,
+    padding: Platform.OS == "ios" ? 15 : 10,
     // backgroundColor: colors.primary,
     flexDirection: "row",
     justifyContent: "center",
